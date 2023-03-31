@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {BsSearch} from "react-icons/bs";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { SearchbarHeader, SearchForm, SearchFormButton, SearchFormButtonLabel, SearchFormInput } from "./SearchBar.styled";
 
@@ -15,6 +15,7 @@ export class SearchBar extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
+        
         if(this.state.imagesTitle.trim() ==='') {
             toast.error('Please, write a value!', {
                 position: "top-center",
@@ -36,7 +37,7 @@ export class SearchBar extends Component {
     render() {
         return(
             <SearchbarHeader>
-                <ToastContainer/>
+                
                 <SearchForm onSubmit={this.handleSubmit}>
                     < SearchFormButton type="submit">
                         <BsSearch size="25"/>

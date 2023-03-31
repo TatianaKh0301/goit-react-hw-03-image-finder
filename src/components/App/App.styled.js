@@ -5,5 +5,9 @@ export const AppWrapper = styled.div`
     grid-template-columns: 1fr;
     grid-gap: 16px;
     padding-bottom: 24px;
-    background-color: aliceblue;
+`;
+
+export const SpinerWrapper = styled.div`
+    width: 100%;
+    height: 100%;
 `;
