@@ -2,9 +2,9 @@ import React from "react";
 import { ImageGalleryItem } from '../ImageGalleryItem';
 import { ImageGalleryList } from "./ImageGallery.styled";
 
-export const ImageGallery = ({imagesFind}) => {
+export const ImageGallery = ({imagesFind, onClickImage}) => {
     return(
         <ImageGalleryList>
-            <ImageGalleryItem images={imagesFind}/>
+            <ImageGalleryItem images={imagesFind} onClickImage={onClickImage}/>
         </ImageGalleryList>);
 }

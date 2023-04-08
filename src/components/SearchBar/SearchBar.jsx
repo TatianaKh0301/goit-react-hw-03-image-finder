@@ -36,8 +36,7 @@ export class SearchBar extends Component {
 
     render() {
         return(
-            <SearchbarHeader>
-                
+            <SearchbarHeader>                
                 <SearchForm onSubmit={this.handleSubmit}>
                     < SearchFormButton type="submit">
                         <BsSearch size="25"/>

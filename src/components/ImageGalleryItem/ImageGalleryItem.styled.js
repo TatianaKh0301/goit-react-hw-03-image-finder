@@ -29,3 +29,12 @@ export const Wrapper = styled.div`
     margin-left: auto;
     margin-right: auto;
 `;
+
+export const OpenImage = styled.button`
+    /* border-color: transparent; */
+    border: medium none;
+    background: transparent;
+    background-color: transparent;
+    outline: none;
+    box-shadow: none;
+`;
