@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { AiFillCloseCircle } from "react-icons/ai";
 
 export const GalleryItem = styled.li`
     border-radius: 2px;
@@ -37,4 +38,22 @@ export const OpenImage = styled.button`
     background-color: transparent;
     outline: none;
     box-shadow: none;
+`;
+
+export const CloseButton = styled.button`
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    display: block;
+    margin: 10px 10px auto auto;
+`;
+
+export const CloseIcon = styled(AiFillCloseCircle)`
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    color: gray;
 `;

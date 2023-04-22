@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { Overlay, ModalWindow } from "./Modal.styled";
 
 const modalRoot = document.querySelector('#modal-root');
+// const {onClose} = this.props;
 export class Modal extends Component { 
     
     componentDidMount() {
@@ -13,8 +14,7 @@ export class Modal extends Component {
         window.removeEventListener('keydown', this.handleKeyDown);   
     };
 
-    handleKeyDown = event => {
-        
+    handleKeyDown = event => {        
         if (event.code === "Escape") {
             this.props.onClose();
         }
@@ -22,11 +22,13 @@ export class Modal extends Component {
     };
 
     handleBackdropClick = event => {
+        console.log("event.currentTarget", event.currentTarget);
+        console.log("event.target", event.target);
         if (event.currentTarget === event.target) {
             this.props.onClose();
-        }        
+        }       
     }
-
+    
     render() {
         return createPortal(
             <Overlay onClick={this.handleBackdropClick}>

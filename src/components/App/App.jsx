@@ -1,15 +1,14 @@
 import React, {Component} from "react";
 import { ToastContainer} from 'react-toastify';
-import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { SearchBar } from "components/SearchBar";
 import { Loader } from "components/Loader";
 import { ImageGallery } from "components/ImageGallery/ImageGallery";
-import { Modal } from "components/Modal";
 import { Button } from "components/Button";
-import { AppWrapper, ErrorWrapper, CloseButton, CloseIcon } from "./App.styled";
+import { AppWrapper, ErrorWrapper } from "./App.styled";
 
 
 const APIkey = '30028288-057bf7cd6d2ddc6419712f1dc';
+const perPage = 12;
 
 export class App extends Component {
     state = {
@@ -19,8 +18,7 @@ export class App extends Component {
         isLoader: false,
         error: null,
         page: 0,
-        perPage: 12, 
-        showModal: false,
+        // showModal: false,
         largeImage: '',
         activeImageIndex: 0,
     };
@@ -33,11 +31,8 @@ export class App extends Component {
         console.log("COMPONENTDIDUPDATE");
         const requestValue=this.state.imagesTitle;
 
-        const { page, perPage } = this.state;
-        // if (page === 1) {
-        //     this.setState({images: null});
-        // }
-
+        const { page } = this.state;
+    
         if (prevState.imagesTitle !== this.state.imagesTitle || prevState.page !== this.state.page) {
             if (page === 1) {
                 this.setState({isLoader: true, images: null, hits: null});
@@ -81,7 +76,7 @@ export class App extends Component {
     }
     
     render() {
-        const { hits, isLoader,  error, showModal } = this.state;
+        const { hits, isLoader,  error } = this.state;
         console.log("hits", hits);
        
         return (
@@ -91,16 +86,10 @@ export class App extends Component {
                 {isLoader && <Loader />}
                 {hits &&
                     <>
-                        <ImageGallery imagesFind={hits} onClickImage={this.openModal}/>
-                        
-                        {showModal && 
-                        <Modal onClose = {this.closeModal}>
-                            <CloseButton type="button" onClick={this.closeModal}><CloseIcon /></CloseButton>
-                        </Modal>}
+                        <ImageGallery imagesFind={hits} onClickImage={this.openModal}/>                     
                         <Button onSubmitLoadMore={this.handleButtonLoadMore}/>
                     </>             
                 }      
-                {showModal ? disableBodyScroll(document) : enableBodyScroll(document)}  
                 <ToastContainer/>
             </AppWrapper>
         );
