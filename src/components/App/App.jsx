@@ -22,17 +22,27 @@ export class App extends Component {
         perPage: 12, 
         showModal: false,
         largeImage: '',
+        activeImageIndex: 0,
     };
 
+    componentDidMount(){
+        console.log("ComponentDidMount");
+    };
 
     componentDidUpdate(prevProps, prevState) {
         console.log("COMPONENTDIDUPDATE");
         const requestValue=this.state.imagesTitle;
 
         const { page, perPage } = this.state;
+        // if (page === 1) {
+        //     this.setState({images: null});
+        // }
 
         if (prevState.imagesTitle !== this.state.imagesTitle || prevState.page !== this.state.page) {
-            this.setState({isLoader: true, images: null});
+            if (page === 1) {
+                this.setState({isLoader: true, images: null, hits: null});
+            }
+            
             fetch(`https://pixabay.com/api/?q=${requestValue}&page=${page}&key=${APIkey}&image_type=photo&orientation=horizontal&per_page=${perPage}`)
                 .then(response => response.json())       
                 .then(data => {
