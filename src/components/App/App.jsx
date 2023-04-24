@@ -4,7 +4,7 @@ import { SearchBar } from "components/SearchBar";
 import { Loader } from "components/Loader";
 import { ImageGallery } from "components/ImageGallery/ImageGallery";
 import { Button } from "components/Button";
-import { AppWrapper, ErrorWrapper } from "./App.styled";
+import { AppWrapper, ErrorWrapper, MessageEndGallery } from "./App.styled";
 
 
 const APIkey = '30028288-057bf7cd6d2ddc6419712f1dc';
@@ -13,42 +13,37 @@ const perPage = 12;
 export class App extends Component {
     state = {
         imagesTitle: '',
-        images: null,
         hits: null,
+        totalHits: null,
         isLoader: false,
         error: null,
         page: 0,
-        // showModal: false,
-        largeImage: '',
-        activeImageIndex: 0,
+        moreImages: false,
     };
 
-    componentDidMount(){
-        console.log("ComponentDidMount");
-    };
-
-    componentDidUpdate(prevProps, prevState) {
-        console.log("COMPONENTDIDUPDATE");
+    componentDidUpdate(prevProps, prevState) {    
         const requestValue=this.state.imagesTitle;
 
         const { page } = this.state;
     
         if (prevState.imagesTitle !== this.state.imagesTitle || prevState.page !== this.state.page) {
             if (page === 1) {
-                this.setState({isLoader: true, images: null, hits: null});
+                this.setState({isLoader: true, hits: null});
             }
             
             fetch(`https://pixabay.com/api/?q=${requestValue}&page=${page}&key=${APIkey}&image_type=photo&orientation=horizontal&per_page=${perPage}`)
                 .then(response => response.json())       
                 .then(data => {
                     console.log("data", data);
+                    
                     if (data.hits.length === 0) { 
                         return Promise.reject(new Error(`There are no images "${ requestValue }"`)) 
                     }
                     if (this.state.hits === null) {
-                        return this.setState({hits: data.hits, images: data });
+                        return this.setState({hits: data.hits, totalHits: data.totalHits, moreImages: (Math.ceil(data.totalHits / perPage)) > page });
                     }
                     this.setState(prevState => {return { hits: [...prevState.hits, ...data.hits ]}});
+                    this.setState({moreImages: (Math.ceil(data.totalHits / perPage)) > page});
                 }) 
                 .catch(error => this.setState({ error }))
                 .finally (() => this.setState({isLoader: false}));  
@@ -67,18 +62,10 @@ export class App extends Component {
         }));
     };
 
-    openModal = () => {
-        this.setState({ showModal: true });
-    }
-
-    closeModal = () => {
-        this.setState({ showModal: false });
-    }
-    
     render() {
-        const { hits, isLoader,  error } = this.state;
+        const { hits, isLoader,  error, moreImages } = this.state;
         console.log("hits", hits);
-       
+         
         return (
             <AppWrapper>        
                 <SearchBar onSubmit={this.handleFormSubmit}/>
@@ -86,10 +73,10 @@ export class App extends Component {
                 {isLoader && <Loader />}
                 {hits &&
                     <>
-                        <ImageGallery imagesFind={hits} onClickImage={this.openModal}/>                     
-                        <Button onSubmitLoadMore={this.handleButtonLoadMore}/>
+                        <ImageGallery imagesFind={hits} />                     
+                        { moreImages ? <Button onSubmitLoadMore={this.handleButtonLoadMore}/> : <MessageEndGallery>There are no more images</MessageEndGallery>}
                     </>             
-                }      
+                }   
                 <ToastContainer/>
             </AppWrapper>
         );

@@ -31,23 +31,15 @@ export const Wrapper = styled.div`
     margin-right: auto;
 `;
 
-export const OpenImage = styled.button`
-    /* border-color: transparent; */
-    border: medium none;
-    background: transparent;
-    background-color: transparent;
-    outline: none;
-    box-shadow: none;
-`;
-
 export const CloseButton = styled.button`
     width: 40px;
     height: 40px;
     padding: 0;
     border: none;
     border-radius: 50%;
-    display: block;
     margin: 10px 10px auto auto;
+    position: absolute;
+    left: 750px;
 `;
 
 export const CloseIcon = styled(AiFillCloseCircle)`
@@ -56,4 +48,11 @@ export const CloseIcon = styled(AiFillCloseCircle)`
     width: 100%;
     height: 100%;
     color: gray;
+`;
+
+export const LargeImage = styled.img`
+    display: block;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
 `;

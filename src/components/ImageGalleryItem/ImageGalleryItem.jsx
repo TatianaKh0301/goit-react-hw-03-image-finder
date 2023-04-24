@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Modal } from "components/Modal";
-import { GalleryItem, GalleryItemImage, Wrapper, OpenImage, CloseButton, CloseIcon} from './ImageGalleryItem.styled';
+import { GalleryItem, GalleryItemImage, Wrapper, CloseButton, CloseIcon, LargeImage } from './ImageGalleryItem.styled';
 
 // export const ImageGalleryItem = ({images,  onClickImage}) => {
 //     console.log("imagesItem", images[0].id);
@@ -20,9 +20,9 @@ import { GalleryItem, GalleryItemImage, Wrapper, OpenImage, CloseButton, CloseIc
 // }
 // = ({images,  onClickImage}) =>
 export class ImageGalleryItem extends Component  {
-    // console.log("imagesItem", images[0].id);
     state = {
         showModal: false,
+        activeImageIndex: 0,
     };
 
     openModal = () => {
@@ -33,20 +33,27 @@ export class ImageGalleryItem extends Component  {
         this.setState({ showModal: false });
     }
     
+    setActiveImageIndex = index => {
+        this.setState({ activeImageIndex: index});
+    };
+    
     render() {
-        const {showModal} = this.state;
+        const {showModal, activeImageIndex} = this.state;
+        const { images } = this.props;
+        const activeImage = images[activeImageIndex];
         return(
             <Wrapper>
-                {this.props.images.map(({ id, webformatURL, largeImageURL, tags }) => 
-                    (<GalleryItem key={id}>
-                        <OpenImage onClick={this.openModal}>
-                            <GalleryItemImage src={webformatURL} alt="ImageGalleryItem" />
+                {images.map(({ id, webformatURL, largeImageURL, tags }, index) => 
+                    
+                    (<GalleryItem key={id} 
+                        onClick = {() => 
+                        this.setActiveImageIndex(index)}>
+                            <GalleryItemImage src={webformatURL} alt="ImageGalleryItem" onClick={this.openModal} />
                             {showModal && 
                                 <Modal onClose = {this.closeModal}>
                                     <CloseButton type="button" onClick ={this.closeModal}><CloseIcon /></CloseButton>
-                                    <img src={largeImageURL} alt={tags}/>
+                                    <LargeImage src={activeImage.largeImageURL} alt={activeImage.tags}/>
                                 </Modal>}
-                        </OpenImage>                        
                     </GalleryItem>)
                 )}
             </Wrapper>  
