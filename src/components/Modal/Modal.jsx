@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { createPortal } from "react-dom";
+import PropTypes from 'prop-types';
 import { Overlay, ModalWindow } from "./Modal.styled";
 
 const modalRoot = document.querySelector('#modal-root');
-// const {onClose} = this.props;
 export class Modal extends Component { 
     
     componentDidMount() {
@@ -40,4 +40,9 @@ export class Modal extends Component {
         );
     }    
 }
+
+Modal.propTypes = {
+    onClose: PropTypes.func.isRequired,
+    children: PropTypes.node.isRequired,
+};
 

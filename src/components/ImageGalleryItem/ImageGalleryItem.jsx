@@ -1,24 +1,7 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import { Modal } from "components/Modal";
 import { GalleryItem, GalleryItemImage, Wrapper, CloseButton, CloseIcon, LargeImage } from './ImageGalleryItem.styled';
-
-// export const ImageGalleryItem = ({images,  onClickImage}) => {
-//     console.log("imagesItem", images[0].id);
-    
-    
-//     return(
-//         <Wrapper>
-//             {images.map(({ id, webformatURL }) => 
-//                 (<GalleryItem key={id}>
-//                     <OpenImage onClick={onClickImage}>
-//                         <GalleryItemImage src={webformatURL} alt="ImageGalleryItem" />
-//                     </OpenImage>                        
-//                 </GalleryItem>)
-//             )}
-//         </Wrapper>  
-//     );
-// }
-// = ({images,  onClickImage}) =>
 export class ImageGalleryItem extends Component  {
     state = {
         showModal: false,
@@ -61,4 +44,13 @@ export class ImageGalleryItem extends Component  {
     }   
 }
 
-// onClose = {this.closeModal}
+ImageGalleryItem.propTypes = {
+    images: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            webformatURL: PropTypes.string.isRequired,
+            largeImageURL: PropTypes.string.isRequired,
+            tags: PropTypes.string.isRequired,
+        }).isRequired
+    ).isRequired
+};
