@@ -64,7 +64,7 @@ export class App extends Component {
 
     render() {
         const { hits, isLoader,  error, moreImages } = this.state;
-        console.log("hits", hits);
+        // console.log("hits", hits);
          
         return (
             <AppWrapper>        
